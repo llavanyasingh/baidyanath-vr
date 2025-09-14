@@ -6,18 +6,18 @@
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.6/aframe/build/aframe-ar.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <!-- AR Scene -->
-    <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
-      <!-- Floating plane in front of the camera -->
-      <a-entity 
-        position="0 0 -2" 
-        rotation="0 0 0"
-        geometry="primitive: plane; width: 1.5; height: 1;" 
-        material="src: url(https://raw.githubusercontent.com/llavanyasingh/baidyanath-vr/main/pamphlet.jpeg); side: double;">
-      </a-entity>
-      
+    <a-scene embedded arjs>
+      <!-- Hiro Marker -->
+      <a-marker preset="hiro">
+        <!-- Your pamphlet image as a plane -->
+        <a-plane src="https://raw.githubusercontent.com/llavanyasingh/baidyanath-vr/main/pamphlet.jpeg"
+                 width="1.5" height="1" rotation="-90 0 0">
+        </a-plane>
+      </a-marker>
+
       <!-- Camera -->
       <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
+
