@@ -1,29 +1,66 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Pamphlet AR</title>
-  <script>
-    // Detect if iPhone/iPad
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    window.onload = () => {
-      if (isIOS) {
-        // iPhone/iPad → open USDZ directly
-        window.location.href = "pamphlet.usdz";
-      } else {
-        // Android → launch Google Scene Viewer in AR-only mode
-        window.location.href =
-          "intent://arvr.google.com/scene-viewer/1.0" +
-          "?file=" + encodeURIComponent(window.location.origin + "/pamphlet.glb") +
-          "&mode=ar_only#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;end;";
-      }
-    };
-  </script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Pamphlet AR View</title>
+<style>
+  html,body { height:100%; margin:0; background:#000; overflow:hidden; }
+  /* full-screen camera */
+  #video {
+    position:fixed; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:0;
+  }
+  /* centered overlay image */
+  #overlay {
+    position:fixed; left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    max-width:90vw; max-height:90vh;
+    z-index:1; pointer-events:none;
+    -webkit-user-select:none; user-select:none;
+  }
+  #overlay img { display:block; width:100%; height:auto; max-height:90vh; }
+  /* fallback message if camera not available or permission denied */
+  #noCam {
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    z-index:2; color:#fff; padding:18px; text-align:center;
+    background:#000;
+  }
+</style>
 </head>
 <body>
-  <p>If AR does not launch automatically, <a href="pamphlet.glb">click here</a>.</p>
+  <video id="video" autoplay playsinline></video>
+
+  <div id="noCam">Camera not available or permission denied. The image is shown below.</div>
+
+  <div id="overlay"><img src="pamphlet.jpg" alt="Pamphlet"></div>
+
+  <script>
+  (async () => {
+    const video = document.getElementById('video');
+    const noCam = document.getElementById('noCam');
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      // No camera API
+      video.style.display = 'none';
+      noCam.style.display = 'flex';
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: "environment" } }, audio: false
+      });
+      video.srcObject = stream;
+      await video.play();
+    } catch (err) {
+      // permission denied or camera not available
+      video.style.display = 'none';
+      noCam.style.display = 'flex';
+      console.warn('Camera start failed:', err);
+    }
+  })();
+  </script>
 </body>
 </html>
 
