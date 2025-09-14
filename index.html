@@ -1,23 +1,56 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>AR Pamphlet</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.6/aframe/build/aframe-ar.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-      <!-- Hiro Marker -->
-      <a-marker preset="hiro">
-        <!-- Your pamphlet image as a plane -->
-        <a-plane src="https://raw.githubusercontent.com/llavanyasingh/baidyanath-vr/main/pamphlet.jpeg"
-                 width="1.5" height="1" rotation="-90 0 0">
-        </a-plane>
-      </a-marker>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pamphlet AR</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin:0;
+      font-family:sans-serif;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      background:#fafafa;
+      color:#333;
+    }
+    header {
+      padding: 1rem;
+      text-align: center;
+    }
+    model-viewer {
+      width:100%;
+      height:80vh;
+      background:#eee;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+    footer {
+      padding:1rem;
+      text-align:center;
+      font-size:0.9rem;
+      color:#555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>📖 View Our Pamphlet in AR</h2>
+    <p>Tap the button below to place the pamphlet in your space (works best on Android).</p>
+  </header>
 
-      <!-- Camera -->
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
+  <model-viewer
+    src="pamphlet.glb"
+    alt="Pamphlet"
+    ar
+    ar-modes="webxr scene-viewer"
+    camera-controls
+    auto-rotate>
+  </model-viewer>
+
+  <footer>
+    <p>Powered by AR • Hosted on GitHub Pages</p>
+  </footer>
+</body>
 </html>
-
