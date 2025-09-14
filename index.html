@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <title>AR Pamphlet</title>
-    <!-- Load A-Frame and AR.js -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.6/aframe/build/aframe-ar.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <!-- AR Scene -->
     <a-scene embedded arjs>
-      <!-- Pamphlet Image -->
-      <a-plane src="pamphlet.png" height="1.5" width="1" position="0 0 -2"></a-plane>
+      <!-- Replace the URL below with your GitHub-hosted image -->
+      <a-plane src="https://raw.githubusercontent.com/YOUR_USERNAME/ar-pamphlet/main/pamphlet.jpeg"
+               position="0 0 -2"
+               width="1.5"
+               height="1"
+               rotation="0 0 0">
+      </a-plane>
     </a-scene>
   </body>
 </html>
